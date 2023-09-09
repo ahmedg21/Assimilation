@@ -13,14 +13,14 @@ conn = mysql.connector.connect(
     host="localhost",
     user="root",
     password="",
-    database="pollution"
+    database="poussiere"
 )
 
 # Création d'un curseur
 cur = conn.cursor()
 
 # Date de début pour le calcul de la moyenne (24 septembre 2022)
-start_date = datetime(2022, 9, 24)
+start_date = datetime(2022, 12, 26)
 
 # Date de fin (aujourd'hui)
 end_date = datetime.now()
@@ -35,9 +35,9 @@ while current_date <= end_date:
 
     # Sélection des données PM2.5 pour la journée en cours, en excluant les valeurs manquantes
     cur.execute("""
-        SELECT event, pm25
-        FROM data
-        WHERE event >= %s AND event < %s AND pm25 IS NOT NULL AND pm25 != ''
+        SELECT event, PM25
+        FROM envir
+        WHERE event >= %s AND event < %s AND PM25 IS NOT NULL AND PM25 != ''
     """, (current_date, next_date))
 
     data = cur.fetchall()

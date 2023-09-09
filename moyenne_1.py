@@ -2,9 +2,9 @@ import mysql.connector
 from datetime import datetime, timedelta, date
 
 # Fonction pour calculer la moyenne journalière
-def calculate_daily_average(data):
-    if data:
-        return sum(data) / len(data)
+def calculate_daily_average(envir):
+    if envir:
+        return sum(envir) / len(envir)
     else:
         return 0.0
 
@@ -13,7 +13,7 @@ conn = mysql.connector.connect(
     host="localhost",
     user="root",
     password="",
-    database="pollution"
+    database="poussiere"
 )
 
 # Création d'un curseur
@@ -25,9 +25,9 @@ start_date = end_date - timedelta(days=1)
 
 # Sélection des données PM2.5 pour la journée précédente, en excluant les valeurs manquantes
 cur.execute("""
-    SELECT event, pm25
-    FROM data
-    WHERE event >= %s AND event < %s AND pm25 IS NOT NULL AND pm25 != ''
+    SELECT temps, PM25
+    FROM envir
+    WHERE temps >= %s AND temps < %s AND PM25 IS NOT NULL AND pm25 != ''
 """, (start_date, end_date))
 
 data = cur.fetchall()
