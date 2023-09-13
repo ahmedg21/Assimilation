@@ -5,7 +5,7 @@ import statistics
 import time  # Import de la bibliothèque time pour le délai
 
 # Définir le délai en secondes (24 heures)
-delai_en_secondes = 86400
+delai_en_secondes = 600
 
 # Mettre en pause le script pendant le délai spécifié
 time.sleep(delai_en_secondes)
