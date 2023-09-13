@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 nom_utilisateur = 'root'
 mot_de_passe = ''
 hote = 'localhost'
-base_de_donnees = 'poussiere'
+base_de_donnees = 'pollution'
 
 # Établissez une connexion à la base de données MySQL
 connexion = mysql.connector.connect(

@@ -3,8 +3,6 @@ from datetime import datetime, timedelta, date
 import math
 import statistics
 
-
-
 # Connexion à la base de données MySQL
 conn = mysql.connector.connect(
     host="localhost",
@@ -48,11 +46,15 @@ pm10_m = statistics.mean(pm10_data)
 temperature_m = statistics.mean(temperature_data)
 humidity_m = statistics.mean(humidity_data)
 
-# Insertion des moyennes journalières dans une nouvelle table
+# Calcul de l'IQA pour PM2.5 et PM10
+iqa_pm25 = (pm25_m / 75) * 100
+iqa_pm10 = (pm10_m / 150) * 100
+
+# Insertion des moyennes journalières dans une nouvelle table avec les valeurs d'IQA
 cur.execute("""
-    INSERT INTO data_j (event, pm25_m, pm01_m, pm10_m, temperature_m, humidity_m)
-    VALUES (%s, %s, %s, %s, %s, %s)
-""", (start_date, pm25_m, pm01_m, pm10_m, temperature_m, humidity_m))
+    INSERT INTO data_j (event, pm25_m, pm01_m, pm10_m, temperature_m, humidity_m, iqa_pm25, iqa_pm10)
+    VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+""", (start_date, pm25_m, pm01_m, pm10_m, temperature_m, humidity_m, iqa_pm25, iqa_pm10))
 
 # Valider et fermer la connexion
 conn.commit()

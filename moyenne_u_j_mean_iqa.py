@@ -6,7 +6,7 @@ import statistics
 conn = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="150421Ah",
+    password="",
     database="pollution"
 )
 
@@ -14,7 +14,7 @@ conn = mysql.connector.connect(
 cur = conn.cursor()
 
 # Date de début pour le calcul de la moyenne (24 septembre 2022)
-start_date = datetime(2023, 2, 15)
+start_date = datetime(2022, 9, 24)
 
 # Date de fin (hier)
 end_date = datetime.now() - timedelta(days=1)
@@ -58,18 +58,24 @@ while current_date <= end_date:
         # Calcul de la moyenne journalière pour l'humidité
         humidite_m = statistics.mean([float(row[5]) for row in data])
 
+        # Calcul de l'IQA pour PM2.5
+        iqa_pm25 = (pm25_m / 75) * 100
+
+        # Calcul de l'IQA pour PM10
+        iqa_pm10 = (pm10_m / 150) * 100
+
         # Ajouter les moyennes journalières à la liste
-        daily_averages.append((current_date, pm25_m, pm01_m, pm10_m, temperature_m, humidite_m))
+        daily_averages.append((current_date, pm25_m, pm01_m, pm10_m, temperature_m, humidite_m, iqa_pm25, iqa_pm10))
 
     # Passer à la journée suivante
     current_date = next_date
 
 # Insertion des moyennes journalières dans une nouvelle table
-for date, pm25_m, pm01_m, pm10_m, temperature_m, humidite_m in daily_averages:
+for date, pm25_m, pm01_m, pm10_m, temperature_m, humidite_m, iqa_pm25, iqa_pm10 in daily_averages:
     cur.execute("""
-        INSERT INTO moyenne (event, pm25_m, pm01_m, pm10_m, temperature_m, humidity_m)
-        VALUES (%s, %s, %s, %s, %s, %s)
-    """, (date, pm25_m, pm01_m, pm10_m, temperature_m, humidite_m))
+        INSERT INTO moyenne (event, pm25_m, pm01_m, pm10_m, temperature_m, humidity_m, iqa_pm25, iqa_pm10)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+    """, (date, pm25_m, pm01_m, pm10_m, temperature_m, humidite_m, iqa_pm25, iqa_pm10))
     print("Données insérées avec succès")
 
 # Valider et fermer la connexion
