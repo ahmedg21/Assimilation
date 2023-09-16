@@ -6,7 +6,7 @@ import statistics
 conn = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="150421Ah",
+    password="",
     database="pollution"
 )
 
@@ -14,7 +14,7 @@ conn = mysql.connector.connect(
 cur = conn.cursor()
 
 # Date de début pour le calcul de la moyenne (24 septembre 2022)
-start_date = datetime(2023, 2, 15)
+start_date = datetime(2022, 9, 24)
 
 # Date de fin (hier)
 end_date = datetime.now() - timedelta(days=1)

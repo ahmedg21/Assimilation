@@ -7,7 +7,7 @@ import statistics
 conn = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="150421Ah",
+    password="",
     database="pollution"
 )
 
@@ -52,7 +52,7 @@ iqa_pm10 = (pm10_m / 150) * 100
 
 # Insertion des moyennes journalières dans une nouvelle table avec les valeurs d'IQA
 cur.execute("""
-    INSERT INTO data_j (event, pm25_m, pm01_m, pm10_m, temperature_m, humidity_m, iqa_pm25, iqa_pm10)
+    INSERT INTO moyenne (event, pm25_m, pm01_m, pm10_m, temperature_m, humidity_m, iqa_pm25, iqa_pm10)
     VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
 """, (start_date, pm25_m, pm01_m, pm10_m, temperature_m, humidity_m, iqa_pm25, iqa_pm10))
 

@@ -8,7 +8,7 @@ conn = mysql.connector.connect(
     host="localhost",
     user="root",
     password="",
-    database="poussiere"
+    database="pollution"
 )
 
 # Création d'un curseur
@@ -20,14 +20,14 @@ start_date = end_date - timedelta(days=1)
 
 # Sélection des données PM2.5, PM10, PM01, temperature et humidity pour la journée précédente, en excluant les valeurs manquantes et NaN
 cur.execute("""
-    SELECT event, PM25, PM10, PM01, temperature, humidite
-    FROM envir
+    SELECT event, pm25, pm10, pm01, temperature, humidity
+    FROM data
     WHERE event >= %s AND event < %s 
-    AND (PM25 IS NOT NULL AND PM25 != '' AND PM25 NOT LIKE 'NaN%')
-    AND (PM10 IS NOT NULL AND PM10 != '' AND PM10 NOT LIKE 'NaN%')
-    AND (PM01 IS NOT NULL AND PM01 != '' AND PM01 NOT LIKE 'NaN%')
+    AND (pm25 IS NOT NULL AND pm25 != '' AND pm25 NOT LIKE 'NaN%')
+    AND (pm10 IS NOT NULL AND pm10 != '' AND pm10 NOT LIKE 'NaN%')
+    AND (pm01 IS NOT NULL AND pm01 != '' AND pm01 NOT LIKE 'NaN%')
     AND (temperature IS NOT NULL AND temperature != '' AND temperature NOT LIKE 'NaN%')
-    AND (humidite IS NOT NULL AND humidite != '' AND humidite NOT LIKE 'NaN%')
+    AND (humidity IS NOT NULL AND humidity != '' AND humidity NOT LIKE 'NaN%')
 """, (start_date, end_date))
 
 data = cur.fetchall()
