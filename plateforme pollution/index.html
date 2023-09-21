@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Suivi de la Pollution Atmosphérique</title>
+</head>
+<body>
+    <header>
+        <h1>Suivi de la Pollution Atmosphérique</h1>
+    </header>
+    <main>
+        <section class="real-time-data">
+            <h2>Données en temps réel</h2>
+            <div class="data-item">
+                <span class="data-label">PM2.5</span>
+                <span class="data-value" id="pm25-value">---</span> µg/m³
+            </div>
+            <div class="data-item">
+                <span class="data-label">PM10</span>
+                <span class="data-value" id="pm10-value">---</span> µg/m³
+            </div>
+        </section>
+        <section class="predicted-data">
+            <h2>Données prédictives</h2>
+            <div class="data-item">
+                <span class="data-label">PM2.5 (prédit)</span>
+                <span class="data-value" id="predicted-pm25">---</span> µg/m³
+            </div>
+            <div class="data-item">
+                <span class="data-label">PM10 (prédit)</span>
+                <span class="data-value" id="predicted-pm10">---</span> µg/m³
+            </div>
+        </section>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
