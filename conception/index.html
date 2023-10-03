@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dak'Air</title>
+    <link rel="stylesheet" href="dist/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="dist/css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="dist/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://code.highcharts.com/stock/highstock.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/data.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/accessibility.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap5.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/buttons/2.3.4/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/buttons/2.3.4/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/buttons/2.3.4/js/buttons.print.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+
+    <script src="data.js"></script>
+
+    <style type="text/css">
+        .my-card {
+            position: absolute;
+            left: 40%;
+            top: -20px;
+            border-radius: 50%;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="row">
+        <header>
+            <img src="dist/img/logo_0.jpg" alt="iphone" />
+            <h1>Plateforme de Suivi de la Qualité de l'air et de prediction</h1>
+            <h2>Dak'Air -- 📍 capteur esp </h2>
+            <!--<h2>Bassirou NGOM, Moussa Diallo, Simina Drame</h2>-->
+        </header>
+    </div>
+    <br>
+    <div class="row">
+        <span class="mb-4 ms-1"> update : <strong id="date"></strong></span>
+        <div class="jumbotron">
+            <div class="row w-100 ms-1 me-1">
+                <div class="col">
+                    <div class="card border-info mx-sm-1 p-3">
+                        <div class="card border-info shadow text-info p-3 my-card"><span class="fa fa-globe"
+                                aria-hidden="true"></span></div>
+                        <div class="text-info text-center mt-3">
+                            <h4>PM1.0</h4>
+                        </div>
+                        <div class="text-info text-center mt-2">
+                            <h1><span id="v01"></span></h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card border-success mx-sm-1 p-3">
+                        <div class="card border-success shadow text-success p-3 my-card"><span class="fa fa-globe"
+                                aria-hidden="true"></span></div>
+                        <div class="text-success text-center mt-3">
+                            <h4>PM2.5</h4>
+                        </div>
+                        <div class="text-success text-center mt-2">
+                            <h1><span id="v25"></span></h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card border-danger mx-sm-1 p-3">
+                        <div class="card border-danger shadow text-danger p-3 my-card"><span class="fa fa-globe"
+                                aria-hidden="true"></span></div>
+                        <div class="text-danger text-center mt-3">
+                            <h4>PM10</h4>
+                        </div>
+                        <div class="text-danger text-center mt-2">
+                            <h1><span id="v10"></span></h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card border-warning mx-sm-1 p-3">
+                        <div class="card border-warning shadow text-warning p-3 my-card"><span
+                                class="fa fa-thermometer-full" aria-hidden="true"></span></div>
+                        <div class="text-warning text-center mt-3">
+                            <h4>Temperature</h4>
+                        </div>
+                        <div class="text-warning text-center mt-2">
+                            <h1><span id="temp"></span></h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card border-primary mx-sm-1 p-3">
+                        <div class="card border-primary shadow text-primary p-3 my-card"><span class="fa fa-sun-o"
+                                aria-hidden="true"></span></div>
+                        <div class="text-primary text-center mt-3">
+                            <h4>Humidity</h4>
+                        </div>
+                        <div class="text-primary text-center mt-2">
+                            <h1><span id="hum"></span></h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <hr>
+
+    <div class="row">
+
+        <div class="col text-center">
+
+            <ul class="nav nav-tabs text-center" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="all-tab" data-bs-toggle="tab" data-bs-target="#home"
+                        type="button" role="tab" aria-controls="graphs" aria-selected="true">All Graphics</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pm10-tab" data-bs-toggle="tab" data-bs-target="#pm10_1" type="button"
+                        role="tab" aria-controls="pm10" aria-selected="false">PM10</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pm25-tab" data-bs-toggle="tab" data-bs-target="#pm25_1" type="button"
+                        role="tab" aria-controls="pm2.5" aria-selected="false">PM2.5</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pm01-tab" data-bs-toggle="tab" data-bs-target="#pm01_1" type="button"
+                        role="tab" aria-controls="pm01" aria-selected="false">PM01</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="temp-tab" data-bs-toggle="tab" data-bs-target="#temp_1" type="button"
+                        role="tab" aria-controls="temp" aria-selected="false">Temperaure</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="hum-tab" data-bs-toggle="tab" data-bs-target="#hum_1" type="button"
+                        role="tab" aria-controls="hum" aria-selected="false">humidity</button>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="all-tab">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <div class="valeur">
+                                <span class="text-center"><strong>Graphiques PM01, PM2.5, PM10</strong></span>
+                            </div>
+                        </div>
+
+                        <div class="panel-body">
+                            <div id="stock"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="pm10_1" role="tabpanel" aria-labelledby="pm10-tab">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <div class="valeur">
+                                <span class="text-center"><strong>PM01</strong></span>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div id="pm01"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="pm25_1" role="tabpanel" aria-labelledby="pm25-tab">
+
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <div class="valeur">
+                                <span class="text-center"><strong>PM2.5</strong></span>
+                            </div>
+                        </div>
+
+                        <div class="panel-body">
+                            <div id="pm25"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="pm01_1" role="tabpanel" aria-labelledby="pm01-tab">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <div class="valeur">
+                                <span class="text-center"><strong>PM10</strong></span>
+                            </div>
+                        </div>
+
+                        <div class="panel-body">
+                            <div id="pm10"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="temp_1" role="tabpanel" aria-labelledby="temp-tab">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <div class="valeur">
+                                <span class="text-center"><strong>Temperature</strong></span>
+                            </div>
+                        </div>
+
+                        <div class="panel-body">
+                            <div id="temperature"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="hum_1" role="tabpanel" aria-labelledby="hum-tab">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <div class="valeur">
+                                <span class="text-center"><strong>Humidity</strong></span>
+                            </div>
+                        </div>
+
+                        <div class="panel-body">
+                            <div id="humidity"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <br>
+    <hr>
+
+    <br>
+    <div class="row">
+        <div class="col text-center mx-3">
+            <div class="panel panel-info ">
+                <div class="panel-heading">
+                    <div class="valeur">
+                        <span class="text-center"><strong>All data</strong></span>
+                    </div>
+                </div>
+
+                <div class="panel-body mt-3">
+                    <table id="air" class="display table-responsive" style="width:100%">
+                        <thead>
+                            <tr>
+                                <!--                        <th>ID</th>-->
+                                <th>PM10</th>
+                                <th>PM2.5</th>
+                                <th>PM01</th>
+                                <th>TEMPERATURE</th>
+                                <th>HUMIDITÉ</th>
+                                <th>date</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <!--                        <th>ID</th>-->
+                                <th>PM10</th>
+                                <th>PM2.5</th>
+                                <th>PM01</th>
+                                <th>TEMPERATURE</th>
+                                <th>HUMIDITÉ</th>
+                                <th>date</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</body>
+
+</html>
