@@ -39,7 +39,7 @@ observed = list()
 # Boucle de validation pas à pas
 for t in range(len(test)):
     # Création d'un modèle ARIMA avec un ordre de (3, 0, 2)
-    model = ARIMA(history, order=( 3, 0, 2))
+    model = ARIMA(history, order=( 2, 1, 1))
     # Ajustement du modèle aux données historiques
     model_fit = model.fit()
 
