@@ -9,7 +9,7 @@ def analyseur(x):
     return pd.to_datetime(x)
 
 # Chargement du jeu de données à partir d'un fichier CSV
-series = pd.read_csv('C:/Users/DELL/Documents/ASSIMILATION/data.csv', header=0, index_col=0, parse_dates=True, date_parser=analyseur)
+series = pd.read_csv('C:/Users/NZO BUSINESS/Documents/Assimilation/data.csv', header=0, index_col=0, parse_dates=True, date_parser=analyseur)
 
 # Suppression des lignes avec des valeurs manquantes (NaN)
 series = series.dropna()
@@ -64,7 +64,7 @@ print('RMSE (P + 6) : %.3f' % rmse)
 results_df = pd.DataFrame({'Observé (P + 6)': observed_plus_six, 'Prédit (P + 6)': buffer_plus_six})
 
 # Sauvegarde du DataFrame dans un fichier CSV
-results_df.to_csv('predictions_p_plus_six.csv', index=False)
+results_df.to_csv('predictions_p_plus_six_2_1_1.csv', index=False)
 
 # Tracé des valeurs observées (P + 6) et prédites (P + 6)
 plt.plot(observed_plus_six, label='Observé (P + 6)')
@@ -76,4 +76,4 @@ plt.title('Prédictions P + 6 vs Observations P + 6')
 plt.show()
 
 # Affichage d'un message de confirmation
-print("Prédictions P + 6 enregistrées dans 'predictions_p_plus_six.csv'")
+print("Prédictions P + 6 enregistrées dans 'predictions_p_plus_six_2_1_1.csv'")

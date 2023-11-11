@@ -11,16 +11,16 @@ def analyseur(x):
     
 
 # Chargement du jeu de données à partir d'un fichier CSV
-series = pd.read_csv('C:/Users/NZO BUSINESS/Documents/Assimilation/data.csv', header=0, index_col=0, parse_dates=True, date_parser=analyseur)
+series = pd.read_csv('C:/Users/NZO BUSINESS/Documents/Assimilation/data_m.csv', header=0, index_col=0, parse_dates=True, date_parser=analyseur)
 
 # Suppression des lignes avec des valeurs manquantes (NaN)
 series = series.dropna()
 
 # Conversion de l'index en un Index de périodes avec une fréquence quotidienne
-series.index = series.index.to_period('D')
+series.index = series.index.to_period('M')
 
 # Extraction des valeurs de la colonne 'Bel Air' en tant que données de séries temporelles
-X = series['Bel Air'].values
+X = series['B'].values
 
 # Calcul de la taille pour l'ensemble d'entraînement (66 % des données)
 size = int(len(X) * 0.80)
@@ -40,7 +40,7 @@ observed = list()
 # Boucle de validation pas à pas
 for t in range(len(test)):
     # Création d'un modèle ARIMA avec un ordre de (3, 0, 2)
-    model = ARIMA(history, order=( 2, 1, 1))
+    model = ARIMA(history, order=( 3, 0, 1))
     # Ajustement du modèle aux données historiques
     model_fit = model.fit()
 
@@ -75,7 +75,7 @@ print('Coefficient de corrélation : %.3f' % correlation)
 results_df = pd.DataFrame({'Observé': observed, 'Prédit': predictions})
 
 # Sauvegarde du DataFrame dans un fichier CSV
-results_df.to_csv('predictions_et_obs_2_1_1.csv', index=False)
+results_df.to_csv('predictions_et_obs_2_1_1_final_mm.csv', index=False)
 
 # Affichage d'un message de confirmation
 print("Prédictions et valeurs observées enregistrées dans 'predictions_et_obs_2_1_1.csv'")
@@ -87,5 +87,5 @@ pyplot.title('Evaluation prediction Test')
 pyplot.ylabel('Concentration PM2.5 µg/m^3')
 pyplot.xlabel('Date')
 pyplot.legend()
-pyplot.savefig('Evaluation modele 3_0_1.png')
+pyplot.savefig('Evaluation modele 2_1_1_final_mm.png')
 pyplot.show()

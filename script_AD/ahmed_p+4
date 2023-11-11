@@ -26,54 +26,54 @@ size = int(len(X) * 0.80)
 # Séparation des données en ensembles d'entraînement et de test
 train, test = X[0:size], X[size:len(X)]
 
-# Initialisation d'un buffer P + 2 pour stocker les valeurs prédites
-buffer_plus_two = []
+# Initialisation d'un buffer P + 4 pour stocker les valeurs prédites
+buffer_plus_four = []
 
-# Initialisation d'une liste pour stocker les observations correspondantes (P + 2)
-observed_plus_two = []
+# Initialisation d'une liste pour stocker les observations correspondantes (P + 4)
+observed_plus_four = []
 
 # Boucle de validation pas à pas
-for t in range(len(test) - 1):
+for t in range(len(test) - 3):
     # Création d'un modèle ARIMA avec un ordre de (3, 0, 2)
     model = ARIMA(train, order=(2, 1, 1))
     
     # Ajustement du modèle aux données historiques
     model_fit = model.fit()
     
-    # Prévision des deux prochaines valeurs (P + 2)
-    yhat = model_fit.forecast(steps=2)  # Prévision des deux prochaines valeurs (P + 2)
+    # Prévision des quatre prochaines valeurs (P + 4)
+    yhat = model_fit.forecast(steps=5)[1:]  # Prévision des deuxième à cinquième valeurs (P + 4)
     
     # Stockage des valeurs prédites
-    buffer_plus_two.extend(yhat)
+    buffer_plus_four.extend(yhat)
     
-    # Stockage des valeurs réelles correspondantes (P + 2)
-    observed_plus_two.extend(test[t:t+2])
+    # Stockage des valeurs réelles correspondantes (P + 4)
+    observed_plus_four.extend(test[t:t+4])
     
     # Ajout des valeurs réelles aux données d'entraînement pour les prochaines itérations
-    train = np.append(train, test[t])
+    train = np.append(train, test[t:t+3])
 
-# Calcul du coefficient de corrélation entre les valeurs prédites et observées (P + 2)
-correlation = np.corrcoef(observed_plus_two, buffer_plus_two)[0, 1]
-print('Coefficient de corrélation (P + 2) : %.3f' % correlation)
+# Calcul du coefficient de corrélation entre les valeurs prédites et observées (P + 4)
+correlation = np.corrcoef(observed_plus_four, buffer_plus_four)[0, 1]
+print('Coefficient de corrélation (P + 4) : %.3f' % correlation)
 
-# Calcul de l'erreur quadratique moyenne (RMSE) entre les valeurs prédites et observées (P + 2)
-rmse = np.sqrt(mean_squared_error(observed_plus_two, buffer_plus_two))
-print('RMSE (P + 2) : %.3f' % rmse)
+# Calcul de l'erreur quadratique moyenne (RMSE) entre les valeurs prédites et observées (P + 4)
+rmse = np.sqrt(mean_squared_error(observed_plus_four, buffer_plus_four))
+print('RMSE (P + 4) : %.3f' % rmse)
 
-# Création d'un DataFrame pour les prédictions P + 2 et les observations correspondantes
-results_df = pd.DataFrame({'Observé (P + 2)': observed_plus_two, 'Prédit (P + 2)': buffer_plus_two})
+# Création d'un DataFrame pour les prédictions P + 4 et les observations correspondantes
+results_df = pd.DataFrame({'Observé (P + 4)': observed_plus_four, 'Prédit (P + 4)': buffer_plus_four})
 
 # Sauvegarde du DataFrame dans un fichier CSV
-results_df.to_csv('predictions_p_plus_two_2_1.csv', index=False)
+results_df.to_csv('predictions_p_plus_four_2_1_1.csv', index=False)
 
-# Tracé des valeurs observées (P + 2) et prédites (P + 2)
-plt.plot(observed_plus_two, label='Observé (P + 2)')
-plt.plot(buffer_plus_two, color='red', label='Prédit (P + 2)')
+# Tracé des valeurs observées (P + 4) et prédites (P + 4)
+plt.plot(observed_plus_four, label='Observé (P + 4)')
+plt.plot(buffer_plus_four, color='red', label='Prédit (P + 4)')
 plt.legend()
 plt.xlabel('Index')
 plt.ylabel('Valeur')
-plt.title('Prédictions P + 2 vs Observations P + 2')
+plt.title('Prédictions P + 4 vs Observations P + 4')
 plt.show()
 
 # Affichage d'un message de confirmation
-print("Prédictions P + 2 enregistrées dans 'predictions_p_plus_two_2_1_1.csv'")
+print("Prédictions P + 4 enregistrées dans 'predictions_p_plus_four_2_1_1.csv'")

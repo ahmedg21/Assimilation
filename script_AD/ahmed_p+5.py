@@ -9,7 +9,7 @@ def analyseur(x):
     return pd.to_datetime(x)
 
 # Chargement du jeu de données à partir d'un fichier CSV
-series = pd.read_csv('C:/Users/DELL/Documents/ASSIMILATION/data.csv', header=0, index_col=0, parse_dates=True, date_parser=analyseur)
+series = pd.read_csv('C:/Users/NZO BUSINESS/Documents/Assimilation/data.csv', header=0, index_col=0, parse_dates=True, date_parser=analyseur)
 
 # Suppression des lignes avec des valeurs manquantes (NaN)
 series = series.dropna()
@@ -35,7 +35,7 @@ observed_plus_five = []
 # Boucle de validation pas à pas
 for t in range(len(test) - 4):
     # Création d'un modèle ARIMA avec un ordre de (3, 0, 2)
-    model = ARIMA(train, order=(3, 0, 2))
+    model = ARIMA(train, order=(2, 1, 1))
     
     # Ajustement du modèle aux données historiques
     model_fit = model.fit()
@@ -64,7 +64,7 @@ print('RMSE (P + 5) : %.3f' % rmse)
 results_df = pd.DataFrame({'Observé (P + 5)': observed_plus_five, 'Prédit (P + 5)': buffer_plus_five})
 
 # Sauvegarde du DataFrame dans un fichier CSV
-results_df.to_csv('predictions_p_plus_five.csv', index=False)
+results_df.to_csv('predictions_p_plus_five_2_1_1.csv', index=False)
 
 # Tracé des valeurs observées (P + 5) et prédites (P + 5)
 plt.plot(observed_plus_five, label='Observé (P + 5)')
@@ -76,4 +76,4 @@ plt.title('Prédictions P + 5 vs Observations P + 5')
 plt.show()
 
 # Affichage d'un message de confirmation
-print("Prédictions P + 5 enregistrées dans 'predictions_p_plus_five.csv'")
+print("Prédictions P + 5 enregistrées dans 'predictions_p_plus_five_2_1_1.csv'")
